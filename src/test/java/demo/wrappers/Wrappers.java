@@ -14,4 +14,9 @@ public class Wrappers {
     /*
      * Write your selenium wrappers here
      */
+
+     public static void click(WebElement e)
+     {
+        e.click();
+     }
 }
