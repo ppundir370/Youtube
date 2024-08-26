@@ -2,6 +2,7 @@ package demo;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -21,12 +22,15 @@ import org.testng.asserts.SoftAssert;
 import java.time.Duration;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import demo.utils.ExcelDataProvider;
+import demo.utils.ExcelReaderUtil;
 // import io.github.bonigarcia.wdm.WebDriverManager;
 import demo.wrappers.Wrappers;
 
-public class TestCases extends ExcelDataProvider{ // Lets us read the data
+public class TestCases extends ExcelReaderUtil { // Lets us read the data
         ChromeDriver driver;
 
         /*
@@ -35,7 +39,7 @@ public class TestCases extends ExcelDataProvider{ // Lets us read the data
          * instructions
          */
 
-        @Test
+       @Test
         public void testCase01() throws InterruptedException
         {
                 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10000));
@@ -280,6 +284,47 @@ public class TestCases extends ExcelDataProvider{ // Lets us read the data
 
         //yt-formatted-string[text()='News']
         
+        }
+        @Test(enabled = true, dataProvider = "excelData", dataProviderClass = ExcelDataProvider.class)
+        public void testCase05(String searchname) throws InterruptedException
+        {      long targetNumber = 0;
+                long targetToAchieve = 100000000;
+                Actions action = new Actions(driver);
+                WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+                 driver.get("https://www.youtube.com/");
+                 Thread.sleep(2000);
+                 WebElement searElement = driver.findElement(By.xpath("//input[@id='search']"));
+                 searElement.click();
+                action.moveToElement(searElement).sendKeys(searchname).sendKeys(Keys.ENTER).build().perform();
+                 Thread.sleep(10000);
+                 List<WebElement> viewsElement = driver.findElements(By.xpath("//*[@id=\"metadata-line\"]/span[1]"));
+                for(WebElement viewElement : viewsElement)
+                {
+                        String views = viewElement.getText();
+                        String viewNumber = views.split(" ")[0];
+                       // System.out.println("The first value of string" + viewNumber);
+                        String numbersOnly = viewNumber.replaceAll("'^\"|\"$","");
+                        //String numbersOnly = viewNumber.replaceAll("\\D", "");
+                         //System.out.println(" Number without quotes "+ numbersOnly);
+                         if(numbersOnly != null && !numbersOnly.isEmpty())
+                         {
+                                while(targetNumber <= targetToAchieve)
+                                {
+                                        long numbers =  Wrappers.convertViewsToNumber(numbersOnly);
+                                         targetNumber += numbers;
+                                         
+
+                                }
+                                  
+                         }
+                         
+                      
+                }
+                System.out.println(targetNumber);
+                
+                 
+                 
+
         }
 
         

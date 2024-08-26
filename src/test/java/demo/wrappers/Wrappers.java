@@ -19,4 +19,27 @@ public class Wrappers {
      {
         e.click();
      }
+     public static long convertViewsToNumber(String viewonlynumberwithsuffice1)
+     {
+      String numberWithoutQuotes = viewonlynumberwithsuffice1.replaceAll("'^\"|\"$","");
+      numberWithoutQuotes = numberWithoutQuotes.trim();
+
+      //convert the views from 1.3M to 1300000
+      if(numberWithoutQuotes.endsWith("K"))
+      {
+         String viewnumber = numberWithoutQuotes.substring(0, numberWithoutQuotes.length()-1).trim();
+         return (long) (Double.parseDouble(viewnumber)*1000);
+
+      }else if(numberWithoutQuotes.endsWith("M"))
+      {
+         String viewnumber = numberWithoutQuotes.substring(0, numberWithoutQuotes.length()-1).trim();
+         return (long) (Double.parseDouble(viewnumber)*1000000);
+
+      }
+      else
+      {
+         return Long.parseLong(numberWithoutQuotes);
+      }
+
+     }
 }
