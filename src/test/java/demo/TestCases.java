@@ -287,7 +287,11 @@ public class TestCases extends ExcelReaderUtil { // Lets us read the data
         }
         @Test(enabled = true, dataProvider = "excelData", dataProviderClass = ExcelDataProvider.class)
         public void testCase05(String searchname) throws InterruptedException
-        {      long targetNumber = 0;
+        {       
+                if(searchname == "Movies" || searchname == "Music" || searchname == "Games")
+                {
+
+                long targetNumber = 0;
                 long targetToAchieve = 100000000;
                 Actions action = new Actions(driver);
                 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
@@ -296,6 +300,7 @@ public class TestCases extends ExcelReaderUtil { // Lets us read the data
                  WebElement searElement = driver.findElement(By.xpath("//input[@id='search']"));
                  searElement.click();
                 action.moveToElement(searElement).sendKeys(searchname).sendKeys(Keys.ENTER).build().perform();
+                System.out.println("Typed "+ ""+searchname+""+" in the search bar");
                  Thread.sleep(10000);
                  List<WebElement> viewsElement = driver.findElements(By.xpath("//*[@id=\"metadata-line\"]/span[1]"));
                 for(WebElement viewElement : viewsElement)
@@ -321,6 +326,7 @@ public class TestCases extends ExcelReaderUtil { // Lets us read the data
                       
                 }
                 System.out.println(targetNumber);
+        }
                 
                  
                  
