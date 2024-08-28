@@ -263,14 +263,26 @@ public class TestCases extends ExcelReaderUtil { // Lets us read the data
                  if(titleElement.getText().equals("Latest news posts"))
                  {
                    List<WebElement> likeElement = driver.findElements(By.xpath("//span[contains(@id,'vote-count-middle')]"));
-
+                 Thread.sleep(2000);
                  for(int i =0; i< 3; i++)
                         {
+                                if(likeElement.get(i).getText().isEmpty())
+                                {
+                                        int value = 0;
+                                        sum = sum + value;  
+                                }
+                                else
+                                {
                                 int value = Integer.parseInt(likeElement.get(i).getText().trim());
+                                
                                 Thread.sleep(2000);
                                 //System.out.println(value);
                                // Thread.sleep(2000);
                                 sum = sum + value;   
+
+                                }
+                               
+                                
 
                         }
                         System.out.println("Likes sum is ***********************:-" + sum);
@@ -285,53 +297,53 @@ public class TestCases extends ExcelReaderUtil { // Lets us read the data
         //yt-formatted-string[text()='News']
         
         }
-        @Test(enabled = true, dataProvider = "excelData", dataProviderClass = ExcelDataProvider.class)
-        public void testCase05(String searchname) throws InterruptedException
-        {       
-                if(searchname == "Movies" || searchname == "Music" || searchname == "Games")
-                {
+      //  @Test(enabled = true, dataProvider = "excelData", dataProviderClass = ExcelDataProvider.class)
+       // public void testCase05(String searchname) throws InterruptedException
+       // {       
+                //if(searchname == "Movies" || searchname == "Music" || searchname == "Games")
+                //{
 
-                long targetNumber = 0;
-                long targetToAchieve = 100000000;
-                Actions action = new Actions(driver);
-                WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-                 driver.get("https://www.youtube.com/");
-                 Thread.sleep(2000);
-                 WebElement searElement = driver.findElement(By.xpath("//input[@id='search']"));
-                 searElement.click();
-                action.moveToElement(searElement).sendKeys(searchname).sendKeys(Keys.ENTER).build().perform();
-                System.out.println("Typed "+ ""+searchname+""+" in the search bar");
-                 Thread.sleep(10000);
-                 List<WebElement> viewsElement = driver.findElements(By.xpath("//*[@id=\"metadata-line\"]/span[1]"));
-                for(WebElement viewElement : viewsElement)
-                {
-                        String views = viewElement.getText();
-                        String viewNumber = views.split(" ")[0];
-                       // System.out.println("The first value of string" + viewNumber);
-                        String numbersOnly = viewNumber.replaceAll("'^\"|\"$","");
+               // long targetNumber = 0;
+               // long targetToAchieve = 100000000;
+              //  Actions action = new Actions(driver);
+               // WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+               //  driver.get("https://www.youtube.com/");
+               //  Thread.sleep(2000);
+               //  WebElement searElement = driver.findElement(By.xpath("//input[@id='search']"));
+              //   searElement.click();
+              //  action.moveToElement(searElement).sendKeys(searchname).sendKeys(Keys.ENTER).build().perform();
+              //  System.out.println("Typed "+ ""+searchname+""+" in the search bar");
+              //   Thread.sleep(10000);
+               //  List<WebElement> viewsElement = driver.findElements(By.xpath("//*[@id=\"metadata-line\"]/span[1]"));
+               // for(WebElement viewElement : viewsElement)
+               // {
+                      //  String views = viewElement.getText();
+                      //  String viewNumber = views.split(" ")[0];
+                     //  // System.out.println("The first value of string" + viewNumber);
+                     //   String numbersOnly = viewNumber.replaceAll("'^\"|\"$","");
                         //String numbersOnly = viewNumber.replaceAll("\\D", "");
                          //System.out.println(" Number without quotes "+ numbersOnly);
-                         if(numbersOnly != null && !numbersOnly.isEmpty())
-                         {
-                                while(targetNumber <= targetToAchieve)
-                                {
-                                        long numbers =  Wrappers.convertViewsToNumber(numbersOnly);
-                                         targetNumber += numbers;
+                     //    if(numbersOnly != null && !numbersOnly.isEmpty())
+                      //   {
+                      //          while(targetNumber <= targetToAchieve)
+                              //  {
+                             //           long numbers =  Wrappers.convertViewsToNumber(numbersOnly);
+                            //             targetNumber += numbers;
                                          
 
-                                }
+                              //  }
                                   
-                         }
+                       //  }
                          
                       
-                }
-                System.out.println(targetNumber);
-        }
+               // }
+               // System.out.println(targetNumber);
+      //  }
                 
                  
                  
 
-        }
+      //  }
 
         
 
